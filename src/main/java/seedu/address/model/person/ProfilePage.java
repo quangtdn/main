@@ -5,7 +5,7 @@ import static java.util.Objects.requireNonNull;
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
- * Represents a Person's birthday in the address book.
+ * Represents a Person's profile page in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidProfilePage(String)}
  */
 public class ProfilePage {
@@ -17,7 +17,7 @@ public class ProfilePage {
     public final String value;
 
     /**
-     * Validates given birthday.
+     * Validates given profile page.
      *
      * @throws IllegalValueException if given birthday address string is invalid.
      */
@@ -33,6 +33,9 @@ public class ProfilePage {
      * Returns if a given string is a valid person birthday.
      */
     public static boolean isValidProfilePage(String test) {
+        if(test.equals("")) {
+            return true;
+        }
         return test.matches(PROFILEPAGE_VALIDATION_REGEX);
     }
 

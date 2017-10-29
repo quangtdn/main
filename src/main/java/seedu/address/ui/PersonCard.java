@@ -100,8 +100,17 @@ public class PersonCard extends UiPart<Region> {
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
+
+        /*if(!profile.getText().equals("")) {
+           profile.textProperty().bind(Bindings.convert(person.profilepageProperty()));
+        } else {
+            profile.setVisible();
+        }*/
         profile.textProperty().bind(Bindings.convert(person.profilepageProperty()));
+
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
+
+
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             initTags(person);

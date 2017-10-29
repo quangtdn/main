@@ -74,7 +74,7 @@ public class ParserUtil {
      */
     public static Optional<ProfilePage> parseProfilePage(Optional<String> profile) throws IllegalValueException {
         requireNonNull(profile);
-        return profile.isPresent() ? Optional.of(new ProfilePage(profile.get())) : Optional.empty();
+        return profile.isPresent() ? Optional.of(new ProfilePage(profile.get())) : Optional.of(new ProfilePage(""));
     }
 
     /**
