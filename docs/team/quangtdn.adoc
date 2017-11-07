@@ -11,12 +11,20 @@ AddressBook - Level 4 is a desktop address book application used for teaching So
 === Enhancement Added: `phone`
 
 ==== External behavior
-
-
+Locating persons by phone number.
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=undoredo]
+include::../UserGuide.adoc#locating-persons-by-phone-number-code-phone-code-since-v1-1[tag=phone]
+
+Finds person whose phone numbers match with at least a phone number in the specified list // Note that we plan to add multiple phone numbers to a person
+Format: `phone NUMBER [MORE_NUMBERS]`
+
+****
+* The order of phone numbers being queried does not matter.
+* Only the phone number is searched.
+* Only full numbers will be matched e.b. '12345' will not match '123456' // can be modifed latter to match a chain of partial number
+****
 
 #End of Extract#
 
