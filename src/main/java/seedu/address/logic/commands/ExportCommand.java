@@ -1,3 +1,4 @@
+//@@author quangtdn
 package seedu.address.logic.commands;
 
 import java.io.BufferedWriter;
@@ -98,3 +99,4 @@ public class ExportCommand extends Command {
                 && this.savedFilePath.equals(((ExportCommand) other).savedFilePath)); // state check
     }
 }
+//@@author
