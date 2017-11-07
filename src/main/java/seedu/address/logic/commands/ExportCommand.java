@@ -77,6 +77,9 @@ public class ExportCommand extends Command {
                     output.println("Address : "
                             + eElement.getElementsByTagName("address")
                             .item(0).getTextContent());
+                    output.println("Profile Page : "
+                            + eElement.getElementsByTagName("profile")
+                            .item(0).getTextContent());
                 }
 
             }
