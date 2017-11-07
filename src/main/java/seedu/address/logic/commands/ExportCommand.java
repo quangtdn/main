@@ -52,10 +52,10 @@ public class ExportCommand extends Command {
             doc.getDocumentElement().normalize();
 
             output.println("Contact List :");
-            NodeList nList = doc.getElementsByTagName("persons");
+            NodeList personList = doc.getElementsByTagName("persons");
             output.println("----------------------------");
 
-            for (int temp = 0; temp < nList.getLength(); temp++) {
+            for (int temp = 0; temp < personList.getLength(); temp++) {
                 Node nNode = nList.item(temp);
                 output.println("\nPerson :" + nNode.getNodeName());
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
