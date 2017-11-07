@@ -40,16 +40,17 @@ public class ExportCommand extends Command {
 
 
             File fXmlFile = new File(System.getProperty("user.dir") + "/data/addressbook.xml");
-            PrintWriter output = null;
-            output = new PrintWriter(new FileWriter(file));
-
+            System.out.println(System.getProperty("user.dir") + "/data/addressbook.xml");
+            //PrintWriter output = null;
+            //PrintWriter output = new PrintWriter(new FileWriter(file), "UTF-8");
+            PrintWriter output = new PrintWriter(savedFilePath, "UTF-8");
             //File fXmlFile = new File("/Users/mkyong/staff.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(fXmlFile);
             doc.getDocumentElement().normalize();
 
-            output.println("Root element :" + doc.getDocumentElement().getNodeName());
+            output.println("Contact List :");
             NodeList nList = doc.getElementsByTagName("persons");
             output.println("----------------------------");
 
@@ -59,7 +60,10 @@ public class ExportCommand extends Command {
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) nNode;
                     output.println("Name : "
-                            + eElement.getAttribute("name"));
+                            + eElement.getElementsByTagName("name")
+                            .item(0).getTextContent());
+                    //output.println("Name : "
+                      //      + eElement.getAttribute("name"));
                     output.println("Phone : "
                             + eElement.getElementsByTagName("phone")
                             .item(0).getTextContent());
@@ -73,7 +77,9 @@ public class ExportCommand extends Command {
                             + eElement.getElementsByTagName("address")
                             .item(0).getTextContent());
                 }
+
             }
+            output.close();
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,0 +1,51 @@
+Contact List :
+----------------------------
+
+Person :persons
+Name : Alex Yeoh
+Phone : 87438807
+Email : alexyeoh@example.com
+Birthday : 1993/11/12
+Address : Blk 30 Geylang Street 29, #06-40
+
+Person :persons
+Name : Bernice Yu
+Phone : 99272758
+Email : berniceyu@example.com
+Birthday : 1988/12/22
+Address : Blk 30 Lorong 3 Serangoon Gardens, #07-18
+
+Person :persons
+Name : Charlotte Oliveiro
+Phone : 93210283
+Email : charlotte@example.com
+Birthday : 1987/12/12
+Address : Blk 11 Ang Mo Kio Street 74, #11-04
+
+Person :persons
+Name : David Li
+Phone : 91031282
+Email : lidavid@example.com
+Birthday : 1999/01/01
+Address : Blk 436 Serangoon Gardens Street 26, #16-43
+
+Person :persons
+Name : Irfan Ibrahim
+Phone : 92492021
+Email : irfan@example.com
+Birthday : 1985/03/04
+Address : Blk 47 Tampines Street 20, #17-35
+
+Person :persons
+Name : Roy Balakrishnan
+Phone : 92624417
+Email : royb@example.com
+Birthday : 1983/05/08
+Address : Blk 45 Aljunied Street 85, #11-31
+
+Person :persons
+Name : John Doe
+Phone : 98765432
+Email : johnd@example.com
+Birthday : 1995/5/21
+Address : John street, block 123, #01-01
