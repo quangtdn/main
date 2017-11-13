@@ -34,8 +34,7 @@ Returns persons with phone numbers containing 92.
 * `phone 92 65` +
 Returns persons with phone numbers containing `92` or `653`.
 
-image::findPhone1.png[width="300"]
-image::findPhone2.png[width="300"]
+image::findPhone1.png[width="300"] + image::findPhone2.png[width="300"]
 
 #End of Extract#
 
