@@ -46,7 +46,8 @@ image::findPhone2.png[width="200"]
 
 ==== Justification
 
-Searching a contact by phone number is extremely convenient for searching a person in NeoXPro when searching a contact by name is inefficient in a large contact list.
+Searching a contact by partial chain of number is a convenient and efficient feature especially when user has to deal with a large contact list. +
+For example, a user Michael wants to search for his best friend John Cena in NeoXPro. Unfortunately there are 6 contacts with the same name John Cena stored in NeoXPro so using `find` command confuses Michael a lot with 6 output contacts. However, using `phone` command, Michael can directly search for his best friend immediately via his phone. 
 
 ==== Implementation
 
