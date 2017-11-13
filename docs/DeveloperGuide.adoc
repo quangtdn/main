@@ -479,6 +479,9 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Delete command
 
 `delete` command supports modifying the state of address book by deleting all persons whose indices are specified in the input. It inherits from `UndoableCommand`.
+
+image::delete.png[width="300"]
+
 The implementation of `delete` contains 2 classes: `DeleteCommand` and `DeleteCommandParser` inside the logic component. +
 `DeleteCommandParser`, the parser of `delete`, parses user's input into the variable `input: List<Index>` that store a list of `Index`.
 `DeleteCommand`, which handles the logic of `delete` command, then iteratively remove any `Person` object with `Index` specified in `input`.
@@ -505,8 +508,14 @@ And finally, we add the `delete` command to the class 'AddressBookParser' so tha
 === Phone command
 The `phone` command utilize the same implementation as the `Find` command for name. Instead of logic execute search via `Name` attribute of `Person`, the command search for the `phone` attribute.
 
+The `phone` command is handled by the class `FindPhoneCommand` that inherits from `Command` class. +
 `Name` and `Phone` API structure is roughly similar that they allow to extract value of the object. The search algorithm utilizes a class `NameContainsPhonesPredicate implements Predicate<ReadOnlyPerson>`
-which allows the algorithm to use Java `Predicate` class method.
+which allows the algorithm to use Java `Predicate` class method. +
+The diagram demonstrating `phone` command structure is illustrated here:
+
+image::findPhone.png[width="300"]
+
+
 // end::phone[]
 
 // tag::findtag[]

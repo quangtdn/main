@@ -158,10 +158,16 @@ Format: `phone NUMBER [MORE_NUMBERS]`
 
 Examples:
 
-* `phone 123` +
-Returns persons with phone numbers containing 123
-* `phone 123 65` +
-Returns persons with phone numbers containing `123` or `65`.
+* `phone 92` +
+Returns persons with phone numbers containing 92.
+* `phone 92 65` +
+Returns persons with phone numbers containing `92` or `283`.
+
+The second example is illustrated below:
+
+image::findPhone1.png[width="690"]
+
+image::findPhone2.png[width="690"]
 // end::phone[]
 
 // tag::findtag[]
@@ -282,7 +288,7 @@ Examples:
 * `list` +
 `select 2` +
 Selects the 2nd person in the address book. +
-The 2nd person in the list has the profile page "www.facebook.com" +
+The 2nd person in the list has the profile page "twitter.com/davidlee" +
 
 image::select1.png[width="690"]
 

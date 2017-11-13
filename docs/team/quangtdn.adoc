@@ -167,7 +167,3 @@ include::../DeveloperGuide.adoc[tag=addprofile]
 
 * Fix bugs due to merge conflicts for team (Pull requests https://github.com/CS2103AUG2017-W10-B4/main/pull/70[#70], https://github.com/CS2103AUG2017-W10-B4/main/pull/45[#45])
 * Write additional tests to increase coverage by 1.4% (Pull requests https://github.com/CS2103AUG2017-W10-B4/main/pull/89[#89], https://github.com/CS2103AUG2017-W10-B4/main/pull/99[#99])
-
-== Project: PowerPointLabs
-
-{Optionally (not graded), you may include other projects in your portfolio.}
