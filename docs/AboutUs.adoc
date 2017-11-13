@@ -29,7 +29,7 @@ Responsibilities: Logic
 
 === Huang Xiangyuan (David)
 image::hxy0229.png[width="150", align="left"]
-{empty}[http://github.com/hxy0229[github]] [<david#, portfolio>>]
+{empty}[http://github.com/hxy0229[github]] [https://github.com/hxy0229/main/blob/master/docs/team/hxy0229.adoc[portfolio]]
 
 Role: Developer +
 Responsibilities: Storage
