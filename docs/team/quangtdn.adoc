@@ -34,7 +34,9 @@ Returns persons with phone numbers containing 92.
 * `phone 92 65` +
 Returns persons with phone numbers containing `92` or `283`.
 
-image::findPhone1.png[width="200"] +
+The second example is illustrated below:
+
+image::findPhone1.png[width="200"]
 
 image::findPhone2.png[width="200"]
 
