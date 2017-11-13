@@ -38,7 +38,7 @@ Responsibilities: Storage
 
 === Nguyen Minh Quang
 image::quangtdn.png[width="150", align="left"]
-{empty}[http://github.com/quangtdn[github]] [<<quang#, portfolio>>]
+{empty}[http://github.com/quangtdn[github]] [https://cs2103aug2017-w10-b4.github.io/main/team/quangtdn[portfolio]
 
 Role: Code quality, Deliverables and deadlines +
 Responsibilities: Model
