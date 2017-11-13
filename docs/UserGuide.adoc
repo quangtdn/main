@@ -153,7 +153,7 @@ Format: `phone NUMBER [MORE_NUMBERS]`
 ****
 * The order of numbers being queried does not matter.
 * Only the phone number is searched.
-* Partial string number will be matched with phones  e.g. `12345` will match `123456`
+* Partial string number will be matched with phones  e.g. `1234` will match `123456`
 ****
 
 Examples:

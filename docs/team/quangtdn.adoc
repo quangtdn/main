@@ -6,7 +6,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Project: NeoXPro Manager
 NeoXPro is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
 
-*Code contributed*: [https://github.com/CS2103AUG2017-W10-B4/main/blob/master/collated/main/quangtdn.md[Functional code]] [https://github.com/CS2103AUG2017-W10-B4/main/blob/master/collated/test/quangtdn.md[Test code]] [https://github.com/CS2103AUG2017-W10-B4/main/blob/master/collated/unused/quangtdn.md[Unused code]] 
+*Code contributed*: [https://github.com/CS2103AUG2017-W10-B4/main/blob/master/collated/main/quangtdn.md[Functional code]] [https://github.com/CS2103AUG2017-W10-B4/main/blob/master/collated/test/quangtdn.md[Test code]] [https://github.com/CS2103AUG2017-W10-B4/main/blob/master/collated/unused/quangtdn.md[Unused code]]
 
 === Enhancement Added: `phone`
 
@@ -26,6 +26,16 @@ Format: `phone NUMBER [MORE_NUMBERS]`
 * Only the phone number is searched.
 * Partial numbers will be matched e.b. '12345' will match '123456'
 ****
+
+Examples:
+
+* `phone 92` +
+Returns persons with phone numbers containing 92.
+* `phone 92 65` +
+Returns persons with phone numbers containing `92` or `653`.
+
+image::findPhone1.png[width="300"]
+image::findPhone2.png[width="300"]
 
 #End of Extract#
 
