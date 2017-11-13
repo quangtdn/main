@@ -159,7 +159,7 @@ Format: `phone NUMBER [MORE_NUMBERS]`
 Examples:
 
 * `phone 92` +
-Returns persons with phone numbers containing 92.
+Returns persons with phone numbers containing `92`.
 * `phone 92 65` +
 Returns persons with phone numbers containing `92` or `283`.
 
