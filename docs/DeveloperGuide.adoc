@@ -515,7 +515,6 @@ The diagram demonstrating `phone` command structure is illustrated here:
 
 image::findPhone.png[width="300"]
 
-
 // end::phone[]
 
 // tag::findtag[]

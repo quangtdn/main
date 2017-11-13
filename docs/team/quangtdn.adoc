@@ -18,15 +18,29 @@ Locating persons by phone number.
 
 include::../UserGuide.adoc[tag=phone]
 
-Finds person whose phone numbers partially match with at least a phone number in the specified list
+=== Locating persons by phone number: `phone` (since v1.1)
+
+Finds person whose phone numbers partially match with a number in the specified list +
 Format: `phone NUMBER [MORE_NUMBERS]`
 
 ****
 * The order of numbers being queried does not matter.
 * Only the phone number is searched.
-* Partial numbers will be matched e.b. '12345' will match '123456'
+* Partial string number will be matched with phones  e.g. `12345` will match `123456`
 ****
 
+Examples:
+
+* `phone 92` +
+Returns persons with phone numbers containing 92.
+* `phone 92 65` +
+Returns persons with phone numbers containing `92` or `283`.
+
+The second example is illustrated below:
+
+image::findPhone1.png[width="690"]
+
+image::findPhone2.png[width="690"]
 #End of Extract#
 
 ---
@@ -43,6 +57,14 @@ For example, a user Michael wants to search for his best friend John Cena in Neo
 
 include::../DeveloperGuide.adoc[tag=phone]
 
+The `phone` command utilize the same implementation as the `Find` command for name. Instead of logic execute search via `Name` attribute of `Person`, the command search for the `phone` attribute.
+
+The `phone` command is handled by the class `FindPhoneCommand` that inherits from `Command` class. +
+`Name` and `Phone` API structure is roughly similar that they allow to extract value of the object. The search algorithm utilizes a class `NameContainsPhonesPredicate implements Predicate<ReadOnlyPerson>`
+which allows the algorithm to use Java `Predicate` class method. +
+The diagram demonstrating `phone` command structure is illustrated here:
+
+image::findPhone.png[width="300"]
 #End of Extract#
 
 ---
@@ -59,6 +81,17 @@ When a person is selected, his/her profile page will be loaded in UI.
 
 include::../UserGuide.adoc[tag=addpara]
 
+Adds a person to the address book +
+Format: `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [b/BIRTHDAY] [a/ADDRESS] [pr/PROFILE_PAGE] [t/TAG]...`
+
+[TIP]
+A person can have any number of tags (including 0).
+All fields are optional except the person name.
+
+Examples:
+
+* `add n/John Doe p/98765432 e/johnd@example.com b/1995/5/21 a/John street, block 123, #01-01 pr/www.facebook.com/john`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/1999/10/10 t/criminal`
 #End of Extract#
 
 ---
@@ -74,6 +107,64 @@ With the profile page stored for each person, NeoXPRO enhances the user's experi
 
 include::../DeveloperGuide.adoc[tag=addprofile]
 
+The profile page parameter is facilitated by the class `ProfilePage`. +
+In order to add this parameter profile page, we make modifications to UI, Logic, Model and Storage components.
+
+* `UI Component:` +
+`PersonCard`, which resides in UI component, frist creates a label for profile page parameter: +
+[source, java]
+----
+@FXML
+    private Label profile;
+----
+Then `PersonCard` binds the label with the value of `ProfilePage` object. If the input value for `ProfilePage` object is null, it make the label dissapear from UI by setting its visibility to FALSE: +
+[source, java]
+----
+private void bindListeners(ReadOnlyPerson person) {
+    //... binding other labels ...
+
+    if (!person.profilepageProperty().toString().equals("")) {
+        profile.textProperty().bind(Bindings.convert(person.profilepageProperty()));
+        profile.setVisible(true);
+    } else {
+        profile.setVisible(false);
+    }
+    //... binding other labels ...
+}
+----
+
+In order to make `select` command load a person's `ProfilePage` object if it exists, we modify method `handlePersonPanelSelectionChangedEvent()` in `BrowserPanel` that is in charge of updating a person panel: +
+[source, java]
+----
+ private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+     //...
+     if (person.getProfilePage().hasProfilePage()) {
+         loadProfilePage(person);
+     } else {
+         loadPersonPage(person);
+     }
+ }
+----
+
+* `Logic Component:` +
+The prefix for profile page `pr/` is added to `CliSyntax`. Then the following files `AddCommand`, `EditCommand`, `AddCommandParser` and `EditCommandParser` are modified so that `add` and `edit` commands accept the new parameter profile page. +
+`AddCommandParser` does not check for profile page prefix `pr/` as this is an optional parameter.
+
+* `Model Component:` +
+Class `ProfilePage` is used to store profile page property of class `Person`. Class `Person`, which resides in model component and implements `ReadOnlyPerson` interface, form a composition association with `ProfilePage` . +
+As profile page is an optional parameter, a `Person` can be linked to 0 or 1 `ProfilePage` object. +
+The relationship is illustrated in the following diagram:
+
+image::profilePage.png[width="300"]
+
+* `Storage Component:` +
+`xmlAdaptedPerson` file is used to save information of a person in xml format. +
+The `required` parameter of `@XmlElement` element which stores profile page information is set to false to make this property optional: +
+[source, fxml]
+----
+@XmlElement(required = false)
+    private String profile = "";
+----
 #End of Extract#
 
 ---
@@ -88,6 +179,23 @@ Using 'delete' command, user can now delete multiple persons from the contact li
 
 include::../UserGuide.adoc[tag=delete]
 
+Deletes a list of specified persons from the address book. +
+Format: `delete INDEX [MORE_INDICES]`
+
+****
+* Deletes the persons at the specified `INDEX`'s.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`delete 2 1` +
+Deletes the 1st and 2nd person in the address book.
+* `find Betsy` +
+`delete 1` +
+Deletes the 1st person in the results of the `find` command.
 #End of Extract#
 
 ---
@@ -103,6 +211,30 @@ Users now don't have to manually delete each contact at a time.
 
 include::../DeveloperGuide.adoc[tag=delete]
 
+`delete` command supports modifying the state of address book by deleting all persons whose indices are specified in the input. It inherits from `UndoableCommand`.
+
+image::delete.png[width="300"]
+
+The implementation of `delete` contains 2 classes: `DeleteCommand` and `DeleteCommandParser` inside the logic component. +
+`DeleteCommandParser`, the parser of `delete`, parses user's input into the variable `input: List<Index>` that store a list of `Index`.
+`DeleteCommand`, which handles the logic of `delete` command, then iteratively remove any `Person` object with `Index` specified in `input`.
+
+[source, java]
+----
+public class DeleteCommandParser implements Parser<DeleteCommand> {
+    public DeleteCommand parse(String args) throws ParseException {
+        try {
+            List<Index> input= new ArrayList<Index>();
+            // ... Parser logic ...
+            return new DeleteCommand(input);
+        } catch (IllegalValueException ive) {
+            // throw exception here
+        }
+    }
+}
+----
+
+And finally, we add the `delete` command to the class 'AddressBookParser' so that `delete` command is recognized whenever invoked.
 #End of Extract#
 
 ---
@@ -117,6 +249,24 @@ Export the contact list of NeoXPRO into a text file.
 
 include::../UserGuide.adoc[tag=export]
 
+Address book data is exported in text form to the input file path.
+Format: `export [File_Path]`
+****
+* The [File_Path] must contain the file name of the exported file. E.g. `export c:\documents and settings\all users\desktop\exportedData`
+* The [File_Path] can be just the file name of the exported file instead of the file path. In this case, `export` command will export the file [File_Path] to the current directory.
+* The [File_Path] can be blank. In this case, `export` command will export the file with default name "exportFile.txt" to the current directory.
+****
+
+Examples:
+
+* `export c:\documents and settings\all users\desktop\exportedData` +
+Exports the file "exportedData" to the specified path.
+
+* `export exportedData` +
+Exports the file "exportedData" to the current directory of NeoXPro.
+
+* `export` +
+Exports the file "exportFile.txt" to the current directory of NeoXPro.
 #End of Extract#
 
 ---
@@ -132,6 +282,11 @@ With this feature, user can easily make use of the data in contact list.
 
 include::../DeveloperGuide.adoc[tag=export]
 
+`export` access the file `addressbook.xml` to retrieve each person and his/her properties and write it on the file at the specified input.
+Its implementation contains 2 classes: `ExportCommand` and `ExportCommandParser`. +
+The parser `ExportCommandParser` of `export` parses the file path input as a `String` to `ExportCommand`. +
+`ExportCommand`, which handles the logic of `export` command, then writes the exported file on the specified input file path.
+
 #End of Extract#
 
 ---
@@ -146,6 +301,31 @@ When a person is selected, his/her profile page is displayed (if it's stored)
 
 include::../UserGuide.adoc[tag=select]
 
+Selects the person identified by the index number used in the last person listing. +
+Format: `select INDEX`
+
+****
+* Selects the person at the specified `INDEX`.
+* If the person has a valid profile page, address book loads that profile page. Otherwise, it loads the Google search page of the person.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`select 2` +
+Selects the 2nd person in the address book. +
+The 2nd person in the list has the profile page "twitter.com/davidlee" +
+
+image::select1.png[width="690"]
+
+* `find John` +
+`select 1` +
+Selects the 1st person in the results of the `find` command. +
+The 1st person in the list does not have the profile page in address book. +
+
+image::select2.png[width="690"]
 #End of Extract#
 
 ---
@@ -160,6 +340,19 @@ Let users easily access social media and improve experience. Employers can also 
 #Start of Extract [from: Developer Guide]#
 
 include::../DeveloperGuide.adoc[tag=addprofile]
+
+In order to make `select` command load a person's `ProfilePage` object if it exists, we modify method `handlePersonPanelSelectionChangedEvent()` in `BrowserPanel` that is in charge of updating a person panel: +
+[source, java]
+----
+ private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+     //...
+     if (person.getProfilePage().hasProfilePage()) {
+         loadProfilePage(person);
+     } else {
+         loadPersonPage(person);
+     }
+ }
+----
 
 #End of Extract#
 
