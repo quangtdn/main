@@ -170,4 +170,3 @@ include::../DeveloperGuide.adoc[tag=addprofile]
 
 == Project: PowerPointLabs
 
-{Optionally (not graded), you may include other projects in your portfolio.}
